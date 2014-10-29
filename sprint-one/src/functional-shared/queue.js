@@ -12,7 +12,7 @@ var makeQueue = function(){
 var queueMethods = {};
 
 queueMethods.dequeue = function(){
-  if(this.first <storages= this.last){
+  if(this.first <= this.last){
     var value = this.storage[this.first];
     this.first++;
     return value;
