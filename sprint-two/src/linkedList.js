@@ -33,6 +33,19 @@ var makeLinkedList = function(){
     return found;
   };
 
+  list.searchList = function(func){
+    var node = list.head;
+    var foundNode = func(node) ? node : undefined;
+
+    while(foundNode === undefined && node.next != null){
+      node = node.next;
+      if(func(node)){
+        foundNode = node;
+      }
+    }
+    return foundNode;
+  };
+
   return list;
 };
 
