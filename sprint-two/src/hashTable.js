@@ -25,12 +25,29 @@ HashTable.prototype.retrieve = function(k){
       return false;
     }
   });
+  if(node === undefined){
+    return null;
+  }
   return node.value.value;
 };
 
 HashTable.prototype.remove = function(k){
-  this.insert(k, null);
+ var i = getIndexBelowMaxForKey(k, this._limit);
+ var list = this._storage.get(i);
+ var node = list.searchList(function(node){
+    if(node.value.key === k){
+      return node;
+    } else{
+      return null;
+    }
+  });
 
+ list.removeNode(node);
+ this._storage.set(i, list);
+  //get list in bucket
+  //find node in list
+  //delete node from list
+  //put modified list back in bucket
 };
 
 
