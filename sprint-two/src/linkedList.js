@@ -9,14 +9,43 @@ var makeLinkedList = function(){
       list.head = newNode;
     } else {
       list.tail.next = newNode;
+      newNode.previous = list.tail;
     }
     list.tail = newNode;
 
   };
 
   list.removeHead = function(){
+    if(list.head === null && list.tail === null){
+      return null;
+    }
+
     var value = list.head.value;
-    list.head = list.head.next;
+    if (list.head === list.tail){
+      list.head = null;
+      list.tail = null;
+    } else {
+      list.head = list.head.next;
+      list.head.previous = null;
+    }
+    return value;
+  };
+
+  list.removeNode = function(node){
+    var value = list.head.value;
+    if (list.head === list.tail){
+      list.head = null;
+      list.tail = null;
+    } else if(node.previous === null){
+      node.next.previous = null;
+      list.head = node.next;
+    } else if(node.next === null){
+      node.previous.next = null;
+      list.tail = node.previous;
+    } else {
+      node.previous.next = node.next;
+      node.next.previous = node.previous;
+    }
     return value;
   };
 
@@ -34,6 +63,9 @@ var makeLinkedList = function(){
   };
 
   list.searchList = function(func){
+    if(list.head === null && list.tail === null){
+      return undefined;
+    }
     var node = list.head;
     var foundNode = func(node) ? node : undefined;
 
@@ -54,6 +86,7 @@ var makeNode = function(value){
 
   node.value = value;
   node.next = null;
+  node.previous = null;
 
   return node;
 };
