@@ -20,13 +20,13 @@ var makeLinkedList = function(){
     if (list.head !== null){
       list.head.previous = newNode;
       newNode.next = list.head;
-    }else{
+    } else {
       list.tail = newNode;
     }
   };
 
   list.removeHead = function(){
-    if(list.head === null && list.tail === null){
+    if (list.head === null && list.tail === null){
       return null;
     }
     var value = list.head.value;
@@ -62,7 +62,7 @@ var makeLinkedList = function(){
     var node = list.head;
     var found = node.value === target;
 
-    while(!found && node.next != null){
+    while(!found && node.next !== null){
       node = node.next;
       if(node.value === target){
         found = true;
@@ -78,7 +78,7 @@ var makeLinkedList = function(){
     var node = list.head;
     var foundNode = func(node) ? node : undefined;
 
-    while(foundNode === undefined && node.next != null){
+    while(foundNode === undefined && node.next !== null){
       node = node.next;
       if(func(node)){
         foundNode = node;
