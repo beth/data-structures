@@ -7,16 +7,16 @@ var makeStack = function(){
 
   // Implement the methods below
   someInstance.push = function(value){
-    count ++;
+    count++;
     storage[count] = value;
   };
 
   someInstance.pop = function(){
-    if(count > 0){
+    if (count > 0){
       var value = storage[count];
-      count --;
+      count--;
       return value;
-    } else{
+    } else {
       return null;
     }
   };

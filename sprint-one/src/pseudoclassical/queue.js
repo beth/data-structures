@@ -4,16 +4,14 @@ var Queue = function() {
   this.storage = {};
 };
 
-
 Queue.prototype.dequeue = function(){
-  if(this.first <= this.last){
+  if (this.first <= this.last){
     var value = this.storage[this.first];
     this.first++;
     return value;
   } else {
     return null;
   }
-
 };
 
 Queue.prototype.enqueue = function(value){
@@ -22,5 +20,5 @@ Queue.prototype.enqueue = function(value){
 };
 
 Queue.prototype.size = function(){
-  return this.last + 1 - this.first;
+  return (this.last - this.first) + 1;
 };
