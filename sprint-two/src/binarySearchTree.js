@@ -9,7 +9,6 @@ var makeBinarySearchTree = function(value){
 
 var makeBinarySearchTreeMethods = {};
 
-
 makeBinarySearchTreeMethods.insert = function(value){
   var newChild = makeBinarySearchTree(value);
   var node = this;
@@ -51,12 +50,9 @@ makeBinarySearchTreeMethods.depthFirstLog = function(func){
 };
 
 makeBinarySearchTreeMethods.contains = function(target){
-  //check starting node to see if it contains the value
-  //if not, if value is smaller, go left (if a node exists to the left)
-  //  if value is larger, go right (if a node exists to the right)
-  //repeat steps for the left node or the right node
   var found = false;
   var node = this;
+
   var subContains = function(node){
     if (node.value === target){
       found = true;

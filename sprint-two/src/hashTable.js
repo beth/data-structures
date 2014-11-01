@@ -1,22 +1,22 @@
 var HashTable = function(){
   this._limit = 8;
-  this._storage = makeLimitedArray(this._limit);
   this._count = 0;
+  this._storage = makeLimitedArray(this._limit);
 };
 
 HashTable.prototype.insert = function(k, v){
   this._count++;
-  if(this._count >= this._limit*.75){
-    this.changeSize(this._limit*2);
+  if (this._count >= this._limit * .75){
+    this.changeSize(this._limit * 2);
   }
   var i = getIndexBelowMaxForKey(k, this._limit);
-  if (this._storage.get(i) === null || this._storage.get(i) === undefined){
-      var list = makeLinkedList();
-   } else {
+  if (this._storage.get(i) === undefined){
+    var list = makeLinkedList();
+  } else {
     var list = this._storage.get(i);
   }
   var obj = {key: k, value: v};
-  list.addToTail(obj)
+  list.addToTail(obj);
   this._storage.set(i, list);
 };
 
@@ -38,15 +38,15 @@ HashTable.prototype.retrieve = function(k){
 
 HashTable.prototype.remove = function(k){
   this._count--;
-  if(this._count <= .25*this._limit){
-        this.changeSize(this._limit/2);
+  if(this._count <= (this._limit * .25)){
+    this.changeSize(this._limit/2);
   }
   var i = getIndexBelowMaxForKey(k, this._limit);
   var list = this._storage.get(i);
   var node = list.searchList(function(node){
     if(node.value.key === k){
       return node;
-    } else{
+    } else {
       return null;
     }
   });
@@ -57,22 +57,23 @@ HashTable.prototype.remove = function(k){
 
 HashTable.prototype.changeSize = function(size){
   var reHash = [];
-  for(var i = 0; i<this._limit; i++){
+
+  for(var i = 0; i < this._limit; i++){
     var list = this._storage.get(i);
-    if(list !== null && list !== undefined){
+    if(list !== undefined){
       while(list.head !== null){
         reHash.push(list.removeHead());
       }
     }
   }
+
   this._storage = makeLimitedArray(size);
   this._limit = size;
   this._count = 0;
 
-  for(var i = 0; i<reHash.length;i++){
+  for(var i = 0; i < reHash.length;i++){
     this.insert(reHash[i].key, reHash[i].value);
   }
-
 };
 
 

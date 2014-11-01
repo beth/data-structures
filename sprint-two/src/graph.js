@@ -3,11 +3,11 @@ var Graph = function(){
 };
 
 Graph.prototype.addNode = function(newNode, toNode){
+  var newNodeObj = new Node(newNode);
+
   if(Object.keys(this.nodeList).length === 1){
     toNode = Object.keys(this.nodeList)[0];
   }
-
-  var newNodeObj = new Node(newNode);
   this.nodeList[newNode] = newNodeObj;
   if(toNode !== undefined){
     this.addEdge(newNode, toNode);
@@ -64,4 +64,11 @@ var Node = function(value){
 
 /*
  * Complexity: What is the time complexity of the above functions?
+ * forEachNode: linear
+ * removeEdge: linear (splice)
+ * addEdge: constant
+ * getEdge: linear
+ * removeNode: constant
+ * contains: linear
+ * addNode: constant
  */
