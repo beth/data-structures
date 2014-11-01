@@ -40,6 +40,21 @@ var makeLinkedList = function(){
     return value;
   };
 
+  list.removeTail = function(){
+    if (list.head === null && list.tail === null){
+      return null;
+    }
+    var value = list.tail.value;
+    if (list.head === list.tail){
+      list.head = null;
+      list.tail = null;
+    } else {
+      list.tail = list.tail.previous;
+      list.tail.next = null;
+    }
+    return value;
+  };
+
   list.removeNode = function(node){
     var value = list.head.value;
     if (list.head === list.tail){
