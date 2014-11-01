@@ -53,7 +53,12 @@ Graph.prototype.removeEdge = function(fromNode, toNode){
   }
 };
 
+Graph.prototype.forEachNode = function(func){
+  _.each(this.nodeList,func);
+};
+
 var Node = function(value){
+ this.value = value;
  this.connections = [];
 };
 
