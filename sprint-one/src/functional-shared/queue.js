@@ -4,22 +4,19 @@ var makeQueue = function(){
   newQueue.last = -1;
   newQueue.storage = {};
   _.extend(newQueue, queueMethods);
-
   return newQueue;
 };
-
 
 var queueMethods = {};
 
 queueMethods.dequeue = function(){
-  if(this.first <= this.last){
+  if (this.first <= this.last){
     var value = this.storage[this.first];
     this.first++;
     return value;
   } else {
     return null;
   }
-
 };
 
 queueMethods.enqueue = function(value){
@@ -28,5 +25,5 @@ queueMethods.enqueue = function(value){
 };
 
 queueMethods.size = function(){
-  return this.last + 1 - this.first;
+  return (this.last - this.first) + 1;
 };

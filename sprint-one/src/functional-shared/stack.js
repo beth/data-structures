@@ -1,9 +1,7 @@
 var makeStack = function() {
-
   var newStack = {};
   newStack.storage = {};
   newStack.count = 0;
-
   _.extend(newStack, stackMethods);
   return newStack;
 };
@@ -16,13 +14,11 @@ stackMethods.push = function(value){
 };
 
 stackMethods.pop = function(){
-  if(this.count>0){
+  if (this.count > 0){
     var value = this.storage[this.count];
     this.count--;
     return value;
-  }
-  else
-  {
+  } else {
     return null;
   }
 };

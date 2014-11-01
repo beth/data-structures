@@ -3,7 +3,6 @@ var makeQueue = function() {
   newQueue.last = -1;
   newQueue.first = 0;
   newQueue.storage = {};
-
   return newQueue;
 };
 
@@ -17,7 +16,6 @@ queueMethods.dequeue = function(){
   } else {
     return null;
   }
-
 };
 
 queueMethods.enqueue = function(value){
@@ -26,7 +24,7 @@ queueMethods.enqueue = function(value){
 };
 
 queueMethods.size = function(){
-  return this.last + 1 - this.first;
+  return (this.last - this.first) + 1;
 };
 
 

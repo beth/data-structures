@@ -1,7 +1,7 @@
 var Stack = function() {
   this.count = 0;
   this.storage = {};
-  };
+};
 
 Stack.prototype.push = function(value){
   this.count++;
@@ -9,13 +9,11 @@ Stack.prototype.push = function(value){
 };
 
 Stack.prototype.pop = function(){
-  if(this.count>0){
+  if (this.count > 0){
     var value = this.storage[this.count];
     this.count--;
     return value;
-  }
-  else
-  {
+  } else {
     return null;
   }
 };

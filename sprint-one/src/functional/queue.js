@@ -14,17 +14,13 @@ var makeQueue = function(){
   };
 
   someInstance.dequeue = function(){
-    if(last>=first)
-    {
+    if (last >= first){
       var value = storage[first];
       first++;
       return value;
-    }
-    else{
+    } else {
       return null;
     }
-
-
   };
 
   someInstance.size = function(){
