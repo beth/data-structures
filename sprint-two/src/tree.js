@@ -46,6 +46,18 @@ treeMethods.contains = function(target){
   return found;
 };
 
+treeMethods.traverse = function(callback){
+
+  var recursiveTraverse = function(node){
+    callback(node.value);
+    for(var i = 0; i<node.children.length; i++){
+      recursiveTraverse(node.children[i]);
+    };
+  };
+
+  recursiveTraverse(this);
+};
+
 
 /*
  * Complexity: What is the time complexity of the above functions?
