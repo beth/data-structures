@@ -22,6 +22,7 @@ makeBinarySearchTree.prototype.insert = function(value){
       }
     }
   };
+
   placeValue(this);
 };
 
@@ -57,6 +58,22 @@ makeBinarySearchTree.prototype.depthFirstLog = function(callback){
   depthFirst(this);
 };
 
+makeBinarySearchTree.prototype.breadthFirstLog = function(callback){
+  
+  var queue = [];
+  queue.push(this);
+
+  while(queue.length>0){
+    var node = queue.shift();
+    callback(node.value);
+    if(node.left !== null){
+      queue.push(node.left);
+    }
+    if(node.right !== null){
+      queue.push(node.right);
+    }
+  }
+};
 
 
 /*
