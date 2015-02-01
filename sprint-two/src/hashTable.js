@@ -74,7 +74,6 @@ HashTable.prototype._resize = function(size){
       });
     }
   });
-  console.log(this);
   this._limit = size;
   this._storage = makeLimitedArray(this._limit);
   this._count = 0;
