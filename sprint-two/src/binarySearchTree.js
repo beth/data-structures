@@ -75,6 +75,35 @@ makeBinarySearchTree.prototype.breadthFirstLog = function(callback){
   }
 };
 
+makeBinarySearchTree.prototype.makeSortedArray = function(){
+  var arr = [];
+
+  function findSmallest(base){
+    var node = base;
+    var parent = null;
+    while(node.right !== null){
+      parent = node;
+      node = node.right;
+    }
+    return [parent, node];
+  }
+
+  function moveNode(parent, node){
+    arr.push(node.value);
+    if(parent !== null){
+      parent.right = node.left;
+    }
+  }
+
+  while(this.left !== null || this.right !== null){
+    var res = findSmallest(base);
+    moveNode(res[0], res[1]);
+  }
+
+  arr.push(this.value);
+  return arr;
+}
+
 
 /*
  * Complexity: What is the time complexity of the above functions?
