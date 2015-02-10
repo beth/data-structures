@@ -5,103 +5,65 @@ var makeLinkedList = function(){
 
   list.addToTail = function(value){
     var newNode = makeNode(value);
-    if (list.head === null){
-      list.head = newNode;
-    } else {
-      list.tail.next = newNode;
-      newNode.previous = list.tail;
+    if(this.head === null){
+      //First node, don't need to set next or previous
+      this.head = this.tail = newNode;
+    }else{
+      //Need to set next, tail, and previous on new node
+      newNode.previous = this.tail;
+      this.tail.next = this.tail = newNode; 
     }
-    list.tail = newNode;
 
+  };
+
+  list.removeHead = function(){
+    if(this.head !== null){ //there is something to remove
+      var node = this.head;
+      this.head = this.head.next;
+      if(this.head === null){ //there was only one node and now it is removed
+        this.tail = null;
+      }else{
+        this.head.previous = null;
+      }
+      return node.value;
+    }else
+      return null;
   };
 
   list.addToHead = function(value){
     var newNode = makeNode(value);
-    if (list.head !== null){
-      list.head.previous = newNode;
-      newNode.next = list.head;
-    } else {
-      list.tail = newNode;
+    if(this.head === null){ //nothing in list yet
+      this.head = this.tail = newNode;
+    }else{ //Need to set next on new node, previous on current head, reset head
+      newNode.next = this.head;
+      this.head.previous = this.head = newNode;
     }
-  };
-
-  list.removeHead = function(){
-    if (list.head === null && list.tail === null){
-      return null;
-    }
-    var value = list.head.value;
-    if (list.head === list.tail){
-      list.head = null;
-      list.tail = null;
-    } else {
-      list.head = list.head.next;
-      list.head.previous = null;
-    }
-    return value;
   };
 
   list.removeTail = function(){
-    if (list.head === null && list.tail === null){
+    if(this.tail !== null){ //if list is not empty
+      var node = this.tail;
+      this.tail = this.tail.previous;
+      if(this.tail === null){ //there was only one node and now it is removed
+        this.head = null;
+      }else{
+        this.tail.next = null;
+      }
+      return node.value;
+    }else
       return null;
-    }
-    var value = list.tail.value;
-    if (list.head === list.tail){
-      list.head = null;
-      list.tail = null;
-    } else {
-      list.tail = list.tail.previous;
-      list.tail.next = null;
-    }
-    return value;
-  };
-
-  list.removeNode = function(node){
-    var value = list.head.value;
-    if (list.head === list.tail){
-      list.head = null;
-      list.tail = null;
-    } else if(node.previous === null){
-      node.next.previous = null;
-      list.head = node.next;
-    } else if(node.next === null){
-      node.previous.next = null;
-      list.tail = node.previous;
-    } else {
-      node.previous.next = node.next;
-      node.next.previous = node.previous;
-    }
-    return value;
   };
 
   list.contains = function(target){
-    var node = list.head;
-    var found = node.value === target;
-
-    while(!found && node.next !== null){
-      node = node.next;
+    var node = this.head;
+    while(node !== null){
       if(node.value === target){
-        found = true;
+        return true;
       }
-    }
-    return found;
-  };
-
-  list.searchList = function(func){
-    if(list.head === null && list.tail === null){
-      return undefined;
-    }
-    var node = list.head;
-    var foundNode = func(node) ? node : undefined;
-
-    while(foundNode === undefined && node.next !== null){
       node = node.next;
-      if(func(node)){
-        foundNode = node;
-      }
     }
-    return foundNode;
+    return false;
   };
-
   return list;
 };
 

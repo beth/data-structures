@@ -1,29 +1,26 @@
 var makeQueue = function(){
-  var newQueue = {};
-  newQueue.first = 0;
-  newQueue.last = -1;
-  newQueue.storage = {};
-  _.extend(newQueue, queueMethods);
-  return newQueue;
+  var obj = {};
+
+  obj.storage = {};
+  obj.start = 0;
+  obj.end = -1;
+  _.extend(obj,queueMethods);
+
+  return obj;
 };
 
-var queueMethods = {};
-
-queueMethods.dequeue = function(){
-  if (this.first <= this.last){
-    var value = this.storage[this.first];
-    this.first++;
-    return value;
-  } else {
-    return null;
-  }
-};
+queueMethods = {};
 
 queueMethods.enqueue = function(value){
-  this.last++;
-  this.storage[this.last] = value;
+  this.storage[++this.end] = value;
+};
+
+queueMethods.dequeue = function(){
+  if(this.end>=this.start){
+    return this.storage[this.start++];
+  }else
+    return null;
 };
 
 queueMethods.size = function(){
-  return (this.last - this.first) + 1;
-};
+  return this.end - this.start + 1;

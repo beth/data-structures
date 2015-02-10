@@ -4,25 +4,22 @@ var makeStack = function(){
 
   // Use an object with numeric keys to store values
   var storage = {};
+  var start = 0;
 
   // Implement the methods below
   someInstance.push = function(value){
-    count++;
-    storage[count] = value;
+    storage[start++] = value;
   };
 
   someInstance.pop = function(){
-    if (count > 0){
-      var value = storage[count];
-      count--;
-      return value;
-    } else {
+    if(start > 0)
+      return storage[--start];
+    else
       return null;
-    }
   };
 
   someInstance.size = function(){
-    return count;
+    return start;
   };
 
   return someInstance;

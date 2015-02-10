@@ -1,23 +1,19 @@
 var Stack = function() {
-  this.count = 0;
   this.storage = {};
+  this.start = 0;
 };
 
 Stack.prototype.push = function(value){
-  this.count++;
-  this.storage[this.count] = value;
+  this.storage[this.start++] = value;
 };
 
 Stack.prototype.pop = function(){
-  if (this.count > 0){
-    var value = this.storage[this.count];
-    this.count--;
-    return value;
-  } else {
+  if(this.start>0){
+    return this.storage[--this.start];
+  }else
     return null;
-  }
 };
 
 Stack.prototype.size = function(){
-  return this.count;
+  return this.start;
 };

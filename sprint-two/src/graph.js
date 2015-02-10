@@ -1,65 +1,76 @@
 var Graph = function(){
-  this.nodeList = {};
-};
-
-Graph.prototype.addNode = function(newNode, toNode){
-  var newNodeObj = new Node(newNode);
-
-  if(Object.keys(this.nodeList).length === 1){
-    toNode = Object.keys(this.nodeList)[0];
-  }
-  this.nodeList[newNode] = newNodeObj;
-  if(toNode !== undefined){
-    this.addEdge(newNode, toNode);
-  }
-};
-
-Graph.prototype.contains = function(node){
-  return node in this.nodeList;
-};
-
-Graph.prototype.removeNode = function(node){
-  var nodeCon = this.nodeList[node].connections;
-  _.each(nodeCon, function(toNode){
-    this.removeEdge(node, toNode);
-  });
-  delete this.nodeList[node];
-};
-
-Graph.prototype.getEdge = function(fromNode, toNode){
-  var fromNodeObj = this.nodeList[fromNode];
-  return _.contains(fromNodeObj.connections, toNode);
-};
-
-Graph.prototype.addEdge = function(fromNode, toNode){
-  var fromNodeObj = this.nodeList[fromNode];
-  var toNodeObj = this.nodeList[toNode];
-  fromNodeObj.connections.push(toNode);
-  toNodeObj.connections.push(fromNode);
-};
-
-Graph.prototype.removeEdge = function(fromNode, toNode){
-  var fromNodeCon = this.nodeList[fromNode].connections;
-  var toNodeCon = this.nodeList[toNode].connections;
-  var n1 = fromNodeCon.indexOf(toNode);
-  var n2 = toNodeCon.indexOf(fromNode);
-  fromNodeCon.splice(n1, 1);
-  toNodeCon.splice(n2, 1);
-  if(fromNodeCon.length === 0){
-    this.removeNode(fromNode);
-  }
-  if(toNodeCon.length === 0){
-    this.removeNode(toNode);
-  }
-};
-
-Graph.prototype.forEachNode = function(func){
-  _.each(this.nodeList,func);
+  this.nodes = {};
 };
 
 var Node = function(value){
- this.value = value;
- this.connections = [];
+  var node = {};
+  node.value = value;
+  node.edges = [];
+  return node;
+}
+
+var myStringify = function(arg){
+  if(typeof arg === "string"){
+    return arg;
+  }else
+    return JSON.stringify(arg);
+};
+
+Graph.prototype.addNode = function(newNode, toNode){
+  var node = Node(newNode);
+  //If there is exactly one node already there and toNode is undefined
+  if(toNode === undefined && Object.keys(this.nodes).length === 1){
+    toNode = Object.keys(this.nodes)[0];
+  }
+   this.nodes[myStringify(newNode)] = node;
+  if(toNode !== undefined){
+    this.addEdge(newNode, toNode);
+  }
+  
+};
+
+Graph.prototype.contains = function(node){
+  return this.nodes.hasOwnProperty(myStringify(node));
+};
+
+Graph.prototype.removeNode = function(node){
+  _.each(this.nodes[myStringify(node)].edges, function(edge){
+    this.removeEdge(node, edge);
+  });
+  delete this.nodes[myStringify(node)];
+};
+
+Graph.prototype.getEdge = function(fromNode, toNode){
+  var node = this.nodes[myStringify(fromNode)];
+  return node.edges.indexOf(myStringify(toNode)) > -1;
+};
+
+Graph.prototype.addEdge = function(fromNode, toNode){
+  //must add in both directions
+  var fromName = myStringify(fromNode);
+  var toName = myStringify(toNode);
+  this.nodes[fromName].edges.push(toName);
+  this.nodes[toName].edges.push(fromName);
+
+};
+
+Graph.prototype.removeEdge = function(fromNode, toNode){
+  //must remove in both directions
+  var fromName = myStringify(fromNode);
+  var toName = myStringify(toNode);
+
+  //Remove edge from fromNode edge list
+  var indexFromNode = this.nodes[fromName].edges.indexOf(toName);
+  this.nodes[fromName].edges.splice(indexFromNode,1);
+  if(this.nodes[fromName].edges.length === 0){
+    this.removeNode(fromNode);
+  }
+  //Remove edge from toNode edge list
+  var indexToNode = this.nodes[toName].edges.indexOf(fromName);
+  this.nodes[toName].edges.splice(indexToNode,1);
+  if(this.nodes[toName].edges.length === 0){
+    this.removeNode(toNode);
+  }
 };
 
 /*
